@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Weather Forecaster</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- http://api.openweathermap.org/data/2.5/forecast/daily?id=524901&APPID={0bbca8607810584aa1430dced1b6f99b}
+    Make sure to put your unique API key in the URL (taking out the brackets).
+    &APPID={INSERTAPIKEY} will need to be at the end of each URL you access below and in the assignment. -->
+    <script>
+        $(document).ready(function () {
+            $('#search').submit(function () {
+                // your code here (build up your url)
+                var key = 'f75049e8bde6b11a0c5e11e5901b3f86';
+                var input = $('#city').val();
+                var url = 'http://api.openweathermap.org/data/2.5/weather?q='+input+'&&appid='+key;
+                console.log(url);
+                $.get(url, function (res) {
+                    var html_str = "";
+                    var farenheit = Math.max(res.main.temp*(9/5)-459.67).toFixed(2);
+                    html_str += "<h2>" + res.name + "</h2>"; console.log($(this))
+                    html_str += "<h4>Temperature:" + " " + farenheit + "°F</h4>";
+                    $('#results').html(html_str);
+                }, 'json');
+                // don't forget to return false so the page doesn't refresh
+                return false;
+            });
+        });
+    </script>
+    
+    <style type="text/css">
+        #main{
+            width: 100%;
+            vertical-align: top;
+        }
+        #search{
+            height: 50px;
+            width: 300px;
+            display: inline-flex;
+            justify-content: center;
+            background-color: black;
+            text-align: center;
+            padding: 5px;
+        }
+        #city{
+            vertical-align: top;
+        }
+        #submit{
+            vertical-align: top;
+        }
+        h2{
+            font-size: 30pt;
+        }
+        h4{
+            font-size: 20pt;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+    <form id="search">
+        <h1>
+            <input type="text" placeholder="City Name" id="city" value=''></input>
+            <input type="submit" value="Search Weather" id="submit"></input>
+        </h1>
+    </form>
+    <p id="results">
+    </p>
+</div>
+</body>
+
+</html>
